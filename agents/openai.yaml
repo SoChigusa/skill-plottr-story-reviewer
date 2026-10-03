@@ -1,0 +1,3 @@
+interface:
+  display_name: "Plottr Story Reviewer"
+  short_description: "Cross-project Plottr story review with revision proposals and comparison files"
