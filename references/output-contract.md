@@ -68,3 +68,16 @@ Load the installed `pink-elephant-guard` before drafting descriptions when avail
 For a PL-01-only wording revision, preserve every other field and object. Preserve unchanged PL-01 paragraphs as well. Output the actual replacement passages with Scene/card IDs, a changed-only comparison, and optionally the full proposal file with only those replacements. Do not append editor commentary to Notes or refill ledgers to explain a prose edit.
 
 For missing dependencies, distinguish an instruction to load a skill in future local use from actually having read or installed it in this session.
+
+## Dialogue-preservation deliverables
+
+For every dialogue-bearing description rewrite, retain all compatible source lines verbatim. When recovering earlier losses, identify both the author-source file and the immediate proposal baseline by filename and hash.
+
+For a dialogue recovery request, provide:
+- the complete repaired `.pltr`, changing only authorized descriptions and any required transient selection cleanup;
+- a changed-only comparison against the immediate baseline;
+- full replacement passages with Scene and card IDs;
+- an external source-dialogue ledger recording retained, restored, moved, minimally adjusted, and held lines, with exact source wording;
+- structural and scope validation plus quotation-coverage audit.
+
+Describe counts as quotation candidates unless manually verified as spoken dialogue: documents, keywords, and labels can also be quoted. Preserve unresolved original lines in the ledger, not as silent deletions. Keep unchanged Plotlines, Notes, ledgers, titles, and IDs intact. Exclude the original `.pltr` from review ZIPs by default.

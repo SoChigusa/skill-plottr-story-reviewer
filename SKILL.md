@@ -13,11 +13,21 @@ Before drafting or rewriting Plottr descriptions, look up the installed `pink-el
 
 If the entrypoint is inaccessible, state that briefly, apply the user's explicit prose requirements below, and mark the dependency as not read. Do not imply that the guard was applied or infer its full contents from its name. Read `references/prose-style.md` for this reviewer's own writing rules and examples; these are user-requested rules, not a substitute copy of the missing guard.
 
-Write PL-01 and other execution-facing descriptions as concise scene outlines: **what the character notices, wants, chooses, and does; what changes next**. Keep the source's emotional register and meaningful dialogue. Put diagnostic reasoning and comparisons of rejected options in the review report.
+Write PL-01 and other execution-facing descriptions as concise scene outlines: **what the character notices, wants, chooses, and does; what changes next**. Keep the source's emotional register and all compatible source dialogue, including draft alternatives and quoted inner thoughts, in their original wording. Put diagnostic reasoning and comparisons of rejected options in the review report.
 
 Before delivery, reread every changed prose passage aloud in sequence. Replace author-facing defensive validation with the actual positive motive or action. Preserve genuine refusals, factual absences, uncertainty, danger, and character hesitation when these belong to the story. Use `scripts/lint_plottr_prose.py <proposal.pltr> --baseline <source.pltr> --json-out <prose-lint.json>` to locate candidates for manual review; the tool never rewrites text and its flags are not factual verdicts.
 
 For wording-only requests, lock events, evidence, chronology, knowledge limits, viewpoint, character relationships, scene count, titles, and IDs. Rephrase only the requested changed descriptions. Preserve untouched paragraphs and rich-text nodes exactly. Report any substantive contradiction separately rather than repairing plot during a style pass.
+
+## Preserve dialogue as the author’s writing material
+
+Before a rewrite, read `references/dialogue-preservation.md` and inventory the original author-supplied dialogue. Treat dialogue, quoted thoughts, exchanges, jokes, distinctive address forms, and draft alternatives as protected writing material. Keep compatible lines verbatim in the relevant scene. Concision applies to editorial explanation and redundant connective prose, not to the author’s dialogue inventory.
+
+For a recovery pass, compare the user-authored source with the newest proposal as well as comparing the newest proposal with the repaired file. An immediate-baseline-only diff misses losses inherited from earlier revisions. Restore original wording rather than composing a similar replacement. Preserve compatible banter and emotional beats even when the plot summary can be understood without them.
+
+If a line conflicts with the revised chronology, viewpoint, knowledge, or agreed world rule, prefer moving the intact line to a compatible moment. Use a minimal wording adjustment only when necessary and record the original and replacement in the external report. Preserve unresolved alternatives verbatim in the external dialogue ledger with the exact conflict and pending status. Apply the same source-preservation discipline to all edited Plotlines; PL-01 is the most common case.
+
+Run `scripts/audit_plottr_dialogue.py <author-source.pltr> <proposal.pltr> --baseline <previous-proposal.pltr> --decisions <dialogue-decisions.json> --json-out <dialogue-audit.json>` before delivery. The audit inventories quotations, including non-dialogue quotations, for manual classification. Account for every removed line and check the speaker and scene context; lexical coverage alone is insufficient. Treat unexplained missing lines as delivery blockers.
 
 ## Core workflow
 
@@ -223,7 +233,7 @@ When the user asks for a revised `.pltr` or when a comparison copy would materia
 3. Make only substantive proposed changes that are explicitly described in the review and fall within the minimal write scope.
 4. Keep unapproved `R-###` proposals in the review report by default. Do not modify the in-project revision-history Note merely to record proposals unless the user explicitly wants that.
 5. Inspect the changed-object list before delivery. Revert every change that is unrelated to the named target or a necessary dependency; also revert formatting-only and no-op edits.
-6. Apply the writing pass above to the changed descriptions, especially PL-01. Remove review-only validation from those passages; retain it only in the external report when useful. Check every changed paragraph against the source for substantive drift.
+6. Inventory and preserve the author’s dialogue, then apply the writing pass above to the changed descriptions, especially PL-01. Remove review-only validation from those passages; retain it only in the external report when useful. Check every changed paragraph against the source for substantive drift and recoverable dialogue loss. Retain the original words, rhythm, punctuation, address forms, and draft placeholders of compatible dialogue.
 7. Run `scripts/sanitize_plottr.py <proposal-working.pltr> <proposal.pltr>` after all rich-text edits. By default, clear transient `ui.timeline.focus` editor selections; stale Slate selection paths can crash Plottr after descriptions change. Never guess replacement cursor paths.
 8. Re-run `scripts/inspect_plottr.py` on the sanitized proposal. Treat rich-text errors and stale editor-selection references as delivery blockers.
 9. Generate a comparison HTML with `scripts/compare_plottr.py <original.pltr> <proposal.pltr> <comparison.html>` when useful. It should show changed objects only, not “No changes” placeholders.
@@ -250,12 +260,15 @@ When the user asks for a revised `.pltr` or when a comparison copy would materia
 - `references/review-rubric.md`: detailed cross-project review checklist.
 - `references/output-contract.md`: comparison and review artifact requirements.
 - `references/prose-style.md`: compact scene prose, emotional register, and required use of the installed prose guard when accessible.
+- `references/dialogue-preservation.md`: source-dialogue inventory, verbatim recovery, minimal adjustment, and external disposition ledger.
 - `references/plottr-format-notes.md`: practical notes about observed `.pltr` JSON structure.
 
 ## Bundled scripts
 
 - `scripts/inspect_plottr.py`: structural `.pltr` audit and Markdown/JSON report.
 - `scripts/lint_plottr_prose.py`: read-only, changed-description prose review hints; inspect flags manually.
+- `scripts/audit_plottr_dialogue.py`: compare original author dialogue against the proposal; require explicit dispositions for missing, moved, or adapted quotations.
+- `scripts/test_dialogue_guard.py`: regression tests for quotation extraction and preservation checks.
 - `scripts/sanitize_plottr.py`: rich-text validation and stale-focus cleanup; preserve file metadata by default.
 - `scripts/compare_plottr.py`: readable HTML comparison by beats/cards/notes/characters plus structural summary.
 - `scripts/build_review_bundle.py`: ZIP selected review outputs while excluding the original source by default.
